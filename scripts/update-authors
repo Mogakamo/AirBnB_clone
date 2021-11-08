@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# This scripts updates the AUTHORS file that is found on the root of the repository 
+# Uses the git data to update the list of contributors
+
+set -e
+
+cd "$(dirname "$(readlink -f "$BASH_SOURCE")")/.."
+
+{
+	cat <<- 'EOH'
+		# This file lists all the individuals that have been able to this repo.
+		# For how it is generated see `scripts/update-authors`.
+	EOH
+	echo
+	git log --format='%aN <%aE>' | LC_ALL=C.UTF-8 sort -uf
+} > AUTHORS
